@@ -1,0 +1,85 @@
+﻿<Window x:Class="AnimateListViewDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnimateListViewDemo"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="350"
+        Width="525">
+    <Window.Resources>
+        <Storyboard x:Key="MoveListView">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                           Storyboard.TargetName="MyListView">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+                                      Value="328.5">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseIn" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                           Storyboard.TargetName="MyListView">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                      Value="0.6" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>-->
+        </Storyboard>
+        
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal"
+                    Background="BurlyWood"
+                    Grid.Row="0"
+                    HorizontalAlignment="Stretch"
+                    Height="30">
+            <Button x:Name="GoLeftButton"
+                    Content="Left"
+                    Margin="5"
+                    Click="GoLeftButton_OnClick" />
+
+            <Button Content="Go To Item 1"
+                    Margin="5"
+                    Click="GoToItem1_OnClick" />
+            <Button Content="Go To Item 100"
+                    Margin="5"
+                    Click="GoToItem100_OnClick" />
+            <Button Content="Go To Item 700"
+                    Margin="5"
+                    Click="GoToItem700_OnClick" />
+
+            <Button Content="Go To Selected"
+                    Margin="5"
+                    Click="GoToSelectedItem" />
+
+            <Button x:Name="GoLefRight"
+                    Content="Right"
+                    Margin="5"
+                    Click="GoLRightButton_OnClick" />
+        </StackPanel>
+
+        <Border Grid.Row="2" Background="BurlyWood">
+            <Grid Margin="5" x:Name="GridWithListViews">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ListView x:Name="MyListView"
+                          Grid.Column="0" />
+
+                <ListView x:Name="SecondListView"
+                          Grid.Column="2" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
