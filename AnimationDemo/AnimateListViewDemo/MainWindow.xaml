@@ -28,14 +28,14 @@
                                        Duration="0:0:0" />-->
             
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                           Storyboard.TargetName="FirstListView">
+                                           Storyboard.TargetName="SourceWatchControl">
                 <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
                 <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
             </DoubleAnimationUsingKeyFrames>
 
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                           Storyboard.TargetName="ThirdListView">
+                                           Storyboard.TargetName="DestinationeWatchControl">
                 <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
                 <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
@@ -60,21 +60,21 @@
 
         <Storyboard x:Key="GoNext3To3Storyboard">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                           Storyboard.TargetName="FirstListView">
+                                           Storyboard.TargetName="SourceWatchControl">
                 <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
                 <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
             </DoubleAnimationUsingKeyFrames>
 
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                           Storyboard.TargetName="SecondListView">
+                                           Storyboard.TargetName="ProjectionWatchControl">
                 <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
                 <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
             </DoubleAnimationUsingKeyFrames>
 
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                           Storyboard.TargetName="ThirdListView">
+                                           Storyboard.TargetName="DestinationeWatchControl">
                 <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
                 <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
@@ -108,21 +108,21 @@
                                        Duration="0:0:0" />-->
 
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                           Storyboard.TargetName="FirstListView">
+                                           Storyboard.TargetName="SourceWatchControl">
                 <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
                 <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
             </DoubleAnimationUsingKeyFrames>
 
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                           Storyboard.TargetName="SecondListView">
+                                           Storyboard.TargetName="ProjectionWatchControl">
                 <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
                 <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
             </DoubleAnimationUsingKeyFrames>
 
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                           Storyboard.TargetName="ThirdListView">
+                                           Storyboard.TargetName="DestinationeWatchControl">
                 <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
                 <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
@@ -295,7 +295,7 @@
                                           Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <ListView x:Name="FirstListView"
+                    <ListView x:Name="SourceWatchControl"
                               Grid.Column="0"
                               RenderTransformOrigin="0.5,0.5"
                               Background="#FFE63B38">
@@ -309,7 +309,7 @@
                         </ListView.RenderTransform>
                     </ListView>
 
-                    <ListView x:Name="SecondListView"
+                    <ListView x:Name="ProjectionWatchControl"
                               Grid.Column="2"
                               RenderTransformOrigin="0.5,0.5"
                               Background="#FF57E415">
@@ -323,7 +323,7 @@
                         </ListView.RenderTransform>
                     </ListView>
 
-                    <ListView x:Name="ThirdListView"
+                    <ListView x:Name="DestinationeWatchControl"
                               Grid.Column="4"
                               RenderTransformOrigin="0.5,0.5"
                               Background="#FF0D3DBD">

@@ -40,16 +40,16 @@ namespace AnimateListViewDemo
         {
             InitializeComponent();
             
-            FirstListView.ItemsSource = Enumerable.Range(1, 10000);
+            SourceWatchControl.ItemsSource = Enumerable.Range(1, 10000);
             NavigateToListViewItemIndex(700);
 
-            SecondListView.ItemsSource = Enumerable.Range(1, 10000);
-            SecondListView.SelectedIndex = 2;
-            SecondListView.ScrollIntoView(SecondListView.SelectedItem);
+            ProjectionWatchControl.ItemsSource = Enumerable.Range(1, 10000);
+            ProjectionWatchControl.SelectedIndex = 2;
+            ProjectionWatchControl.ScrollIntoView(ProjectionWatchControl.SelectedItem);
 
-            ThirdListView.ItemsSource = Enumerable.Range(1, 10000);
-            ThirdListView.SelectedIndex = 999;
-            ThirdListView.ScrollIntoView(ThirdListView.SelectedItem);
+            DestinationeWatchControl.ItemsSource = Enumerable.Range(1, 10000);
+            DestinationeWatchControl.SelectedIndex = 999;
+            DestinationeWatchControl.ScrollIntoView(DestinationeWatchControl.SelectedItem);
         }
 
         private void GoToItem1_OnClick(object sender, RoutedEventArgs e)
@@ -69,23 +69,23 @@ namespace AnimateListViewDemo
 
         private void NavigateToListViewItemIndex(int listViewItemIndex)
         {
-            FirstListView.SelectedIndex = listViewItemIndex - 1;
+            SourceWatchControl.SelectedIndex = listViewItemIndex - 1;
             //MyListView.ScrollIntoView(MyListView.Items[0]);
-            FirstListView.ScrollIntoView(FirstListView.SelectedItem);
+            SourceWatchControl.ScrollIntoView(SourceWatchControl.SelectedItem);
             //item.Focus();
         }
 
         private void GoToSelectedItem_OnClick(object sender, RoutedEventArgs e)
         {
             //MyListView.ScrollIntoView(MyListView.Items[0]);
-            FirstListView.ScrollIntoView(FirstListView.SelectedItem);
+            SourceWatchControl.ScrollIntoView(SourceWatchControl.SelectedItem);
         }
 
         private void GoLRightButton_OnClick(object sender, RoutedEventArgs e)
         {
             _image = CreateImageFromControl(GridWithListViews);
 
-            ImitateLeftViewOnRightView(FirstListView, ThirdListView);
+            ImitateLeftViewOnRightView(SourceWatchControl, DestinationeWatchControl);
             AnimateNavigationToRight();
         }
 
@@ -94,7 +94,7 @@ namespace AnimateListViewDemo
             ShowScreanshot();
 
             SetGridLayout(Layout3ListViewsStoryBoardKey);
-            RunMoveNextNavigation(FirstListView, ThirdListView, GoNext3To3StoryboardKey);
+            RunMoveNextNavigation(SourceWatchControl, DestinationeWatchControl, GoNext3To3StoryboardKey);
         }
 
         private void ScrollRight3To2_OnClick(object sender, RoutedEventArgs e)
@@ -102,7 +102,7 @@ namespace AnimateListViewDemo
             ShowScreanshot();
 
             SetGridLayout(Layout2ListViewsStoryBoardKey);
-            RunMoveNextNavigation(FirstListView, ThirdListView, GoNext3To2StoryboardKey);
+            RunMoveNextNavigation(SourceWatchControl, DestinationeWatchControl, GoNext3To2StoryboardKey);
         }
 
         private void ScrollRight2To2_OnClick(object sender, RoutedEventArgs e)
@@ -110,7 +110,7 @@ namespace AnimateListViewDemo
             ShowScreanshot();
 
             SetGridLayout(Layout2ListViewsStoryBoardKey);
-            RunMoveNextNavigation(FirstListView, ThirdListView, GoNext2To2StoryboardKey);
+            RunMoveNextNavigation(SourceWatchControl, DestinationeWatchControl, GoNext2To2StoryboardKey);
         }
 
         private void ScrollRight2To3_OnClick(object sender, RoutedEventArgs e)
@@ -118,7 +118,7 @@ namespace AnimateListViewDemo
             ShowScreanshot();
 
             SetGridLayout(Layout3ListViewsStoryBoardKey);
-            RunMoveNextNavigation(FirstListView, ThirdListView, GoNext2To3StoryboardKey);
+            RunMoveNextNavigation(SourceWatchControl, DestinationeWatchControl, GoNext2To3StoryboardKey);
         }
 
         private void ShowScreanshot()
@@ -172,10 +172,10 @@ namespace AnimateListViewDemo
 
         private double GetListViewOffset()
         {
-            Point firstViewPosition = FirstListView.TransformToAncestor(GridWithListViews)
+            Point firstViewPosition = SourceWatchControl.TransformToAncestor(GridWithListViews)
                 .Transform(new Point(0, 0));
 
-            Point thierdViewPosition = ThirdListView.TransformToAncestor(GridWithListViews)
+            Point thierdViewPosition = DestinationeWatchControl.TransformToAncestor(GridWithListViews)
                 .Transform(new Point(0, 0));
 
             return thierdViewPosition.X - firstViewPosition.X;
@@ -245,7 +245,7 @@ namespace AnimateListViewDemo
             TranslateTransform translateTransform = new TranslateTransform();
             _image.RenderTransform = translateTransform;
 
-            Point rightPoint = SecondListView.TransformToAncestor(GridWithListViews)
+            Point rightPoint = ProjectionWatchControl.TransformToAncestor(GridWithListViews)
                 .Transform(new Point(0, 0));
 
             var translateTransformKeyFrame =
@@ -266,7 +266,7 @@ namespace AnimateListViewDemo
             var objectAnimation = new ObjectAnimationUsingKeyFrames();
             objectAnimation.KeyFrames.Add(visiblityTransformKeyFrameSecond);
 
-            Storyboard.SetTarget(objectAnimation, SecondListView);
+            Storyboard.SetTarget(objectAnimation, ProjectionWatchControl);
             Storyboard.SetTargetProperty(objectAnimation, new PropertyPath("UIElement.Visibility"));
 
             storyBoard.Completed += StoryBoard_Completed;
@@ -277,7 +277,7 @@ namespace AnimateListViewDemo
         {
             GridWithListViews.Children.Remove(_image);
 
-            SecondListView.Visibility = Visibility.Visible;
+            ProjectionWatchControl.Visibility = Visibility.Visible;
         }
 
         private static Image CreateImageFromControl(FrameworkElement frameworkElement)
