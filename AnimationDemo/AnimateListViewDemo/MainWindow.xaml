@@ -7,28 +7,227 @@
         mc:Ignorable="d"
         Title="MainWindow"
         Height="350"
-        Width="525">
+        Width="525"
+        x:Name="WindowThis">
     <Window.Resources>
-        <Storyboard x:Key="MoveListView">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                           Storyboard.TargetName="MyListView">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5"
-                                      Value="328.5">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <CircleEase EasingMode="EaseIn" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-            <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                           Storyboard.TargetName="MyListView">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3"
-                                      Value="0.6" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+        <EasingDoubleKeyFrame x:Key="MoveNext_RealListViewStartOffsetKeyFrame"
+                              KeyTime="0:0:0"
+                              Value="100" />
+        <EasingDoubleKeyFrame x:Key="MoveNext_DummyImageViewEndOffsetKeyFrame"
+                              KeyTime="0:0:2"
+                              Value="-100" />
+
+        <Storyboard x:Key="GoNext3To2Storyboard">
+            <!--<local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SpaceBetweenSourceToPrjection"
+                                       To="0"
+                                       Duration="0:0:0" />
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SecondListColumn"
+                                       To="0"
+                                       Duration="0:0:0" />-->
+            
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="FirstListView">
+                <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
                                       Value="0" />
-            </DoubleAnimationUsingKeyFrames>-->
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="ThirdListView">
+                <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="PlaceHolderImage">
+                <EasingDoubleKeyFrame KeyTime="0:0:0"
+                                      Value="0" />
+                <StaticResource ResourceKey="MoveNext_DummyImageViewEndOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                           Storyboard.TargetName="PlaceHolderImage">
+                <DiscreteObjectKeyFrame KeyTime="0"
+                                        Value="{x:Static Visibility.Visible}" />
+                <DiscreteObjectKeyFrame KeyTime="0:0:2"
+                                        Value="{x:Static Visibility.Hidden}" />
+            </ObjectAnimationUsingKeyFrames>
         </Storyboard>
-        
+
+        <Storyboard x:Key="GoNext3To3Storyboard">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="FirstListView">
+                <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="SecondListView">
+                <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="ThirdListView">
+                <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="PlaceHolderImage">
+                <EasingDoubleKeyFrame KeyTime="0:0:0"
+                                      Value="0" />
+                <StaticResource ResourceKey="MoveNext_DummyImageViewEndOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                           Storyboard.TargetName="PlaceHolderImage">
+                <DiscreteObjectKeyFrame KeyTime="0"
+                                        Value="{x:Static Visibility.Visible}" />
+                <DiscreteObjectKeyFrame KeyTime="0:0:2"
+                                        Value="{x:Static Visibility.Hidden}" />
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Key="GoNext2To3Storyboard">
+            <!--<local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SpaceBetweenSourceToPrjection"
+                                       To="0"
+                                       Duration="0:0:0" />
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SecondListColumn"
+                                       To="0"
+                                       Duration="0:0:0" />-->
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="FirstListView">
+                <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="SecondListView">
+                <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="ThirdListView">
+                <StaticResource ResourceKey="MoveNext_RealListViewStartOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="PlaceHolderImage">
+                <EasingDoubleKeyFrame KeyTime="0:0:0"
+                                      Value="0" />
+                <StaticResource ResourceKey="MoveNext_DummyImageViewEndOffsetKeyFrame" />
+                <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                      Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                           Storyboard.TargetName="PlaceHolderImage">
+                <DiscreteObjectKeyFrame KeyTime="0"
+                                        Value="{x:Static Visibility.Visible}" />
+                <DiscreteObjectKeyFrame KeyTime="0:0:2"
+                                        Value="{x:Static Visibility.Hidden}" />
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Key="Layout1ListViewsStoryBoard">
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="FirstListColumn"
+                                       To="*"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SpaceBetweenSourceToPrjection"
+                                       To="0"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SecondListColumn"
+                                       To="0"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SpaceBetweenProjectionToDestination"
+                                       To="0"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="ThirdListColumn"
+                                       To="0"
+                                       Duration="0:0:0" />
+        </Storyboard>
+
+        <Storyboard x:Key="Layout2ListViewsStoryBoard">
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="FirstListColumn"
+                                       To="*"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SpaceBetweenSourceToPrjection"
+                                       To="10"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SecondListColumn"
+                                       To="0"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SpaceBetweenProjectionToDestination"
+                                       To="0"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="ThirdListColumn"
+                                       To="*"
+                                       Duration="0:0:0" />
+        </Storyboard>
+
+        <Storyboard x:Key="Layout3ListViewsStoryBoard">
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="FirstListColumn"
+                                       To="*"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SpaceBetweenSourceToPrjection"
+                                       To="10"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SecondListColumn"
+                                       To="*"
+                                       Duration="0:0:0" />
+
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="SpaceBetweenProjectionToDestination"
+                                       To="10"
+                                       Duration="0:0:0" />
+            
+            <local:GridLengthAnimation Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                       Storyboard.TargetName="ThirdListColumn"
+                                       To="*"
+                                       Duration="0:0:0" />
+        </Storyboard>
+
     </Window.Resources>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -36,50 +235,125 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal"
-                    Background="BurlyWood"
-                    Grid.Row="0"
-                    HorizontalAlignment="Stretch"
-                    Height="30">
-            <Button x:Name="GoLeftButton"
-                    Content="Left"
-                    Margin="5"
-                    Click="GoLeftButton_OnClick" />
+        <WrapPanel Orientation="Horizontal"
+                   Background="BurlyWood"
+                   Grid.Row="0"
+                   HorizontalAlignment="Stretch">
 
             <Button Content="Go To Item 1"
-                    Margin="5"
+                    Margin="2"
                     Click="GoToItem1_OnClick" />
+            
             <Button Content="Go To Item 100"
-                    Margin="5"
+                    Margin="2"
                     Click="GoToItem100_OnClick" />
+            
             <Button Content="Go To Item 700"
-                    Margin="5"
+                    Margin="2"
                     Click="GoToItem700_OnClick" />
 
             <Button Content="Go To Selected"
-                    Margin="5"
-                    Click="GoToSelectedItem" />
+                    Margin="2"
+                    Click="GoToSelectedItem_OnClick" />
+
+            <Button Content="Scroll Right 3 to 3"
+                    Margin="2"
+                    Click="ScrollRight3To3_OnClick" />
+
+            <Button Content="Scroll Right 3 to 2"
+                    Margin="2"
+                    Click="ScrollRight3To2_OnClick" />
+
+            <Button Content="Scroll Right 2 to 2"
+                    Margin="2"
+                    Click="ScrollRight2To2_OnClick" />
+            
+            <Button Content="Scroll Right 2 to 3"
+                    Margin="2"
+                    Click="ScrollRight2To3_OnClick" />
 
             <Button x:Name="GoLefRight"
                     Content="Right"
-                    Margin="5"
+                    Margin="2"
                     Click="GoLRightButton_OnClick" />
-        </StackPanel>
+        </WrapPanel>
 
-        <Border Grid.Row="2" Background="BurlyWood">
-            <Grid Margin="5" x:Name="GridWithListViews">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <Border Grid.Row="2"
+                Background="BurlyWood">
+            <Border Margin="5">
+                <Grid x:Name="GridWithListViews">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="FirstListColumn"
+                                          Width="*" />
+                        <ColumnDefinition x:Name="SpaceBetweenSourceToPrjection"
+                                          Width="10" />
+                        <ColumnDefinition x:Name="SecondListColumn"
+                                          Width="*" />
+                        <ColumnDefinition x:Name="SpaceBetweenProjectionToDestination"
+                                          Width="10" />
+                        <ColumnDefinition x:Name="ThirdListColumn"
+                                          Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <ListView x:Name="MyListView"
-                          Grid.Column="0" />
+                    <ListView x:Name="FirstListView"
+                              Grid.Column="0"
+                              RenderTransformOrigin="0.5,0.5"
+                              Background="#FFE63B38">
+                        <ListView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </ListView.RenderTransform>
+                    </ListView>
 
-                <ListView x:Name="SecondListView"
-                          Grid.Column="2" />
-            </Grid>
+                    <ListView x:Name="SecondListView"
+                              Grid.Column="2"
+                              RenderTransformOrigin="0.5,0.5"
+                              Background="#FF57E415">
+                        <ListView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </ListView.RenderTransform>
+                    </ListView>
+
+                    <ListView x:Name="ThirdListView"
+                              Grid.Column="4"
+                              RenderTransformOrigin="0.5,0.5"
+                              Background="#FF0D3DBD">
+                        <ListView.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </ListView.RenderTransform>
+                    </ListView>
+
+                    <Image x:Name="PlaceHolderImage"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="5"
+                           Panel.ZIndex="{x:Static local:MainWindow.ImageRegularZIndex}"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Grid>
+            </Border>
         </Border>
     </Grid>
 </Window>

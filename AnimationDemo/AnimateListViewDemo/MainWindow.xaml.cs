@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,19 +19,37 @@ using System.Windows.Threading;
 
 namespace AnimateListViewDemo
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        public static string MoveNextRealListViewStartOffsetKeyFrameKey = "MoveNext_RealListViewStartOffsetKeyFrame";
+        public static string MoveNextDummyImageViewEndOffsetKeyFrameKey = "MoveNext_DummyImageViewEndOffsetKeyFrame";
+
+        public static string GoNext3To3StoryboardKey = "GoNext3To3Storyboard"; 
+        public static string GoNext3To2StoryboardKey = "GoNext3To2Storyboard"; 
+        public static string GoNext2To2StoryboardKey = "GoNext3To2Storyboard";
+        public static string GoNext2To3StoryboardKey = "GoNext2To3Storyboard";
+
+        public static string Layout1ListViewsStoryBoardKey = "Layout1ListViewsStoryBoard";
+        public static string Layout2ListViewsStoryBoardKey = "Layout2ListViewsStoryBoard";
+        public static string Layout3ListViewsStoryBoardKey = "Layout3ListViewsStoryBoard";
+
+        public const int ImageOnTopZIndex = 120;
+        public const int ImageRegularZIndex = 1;
+
         public MainWindow()
         {
             InitializeComponent();
             
-            MyListView.ItemsSource = Enumerable.Range(1, 10000);
+            FirstListView.ItemsSource = Enumerable.Range(1, 10000);
             NavigateToListViewItemIndex(700);
 
-            SecondListView.ItemsSource = Enumerable.Range(1, 10000); ;
+            SecondListView.ItemsSource = Enumerable.Range(1, 10000);
+            SecondListView.SelectedIndex = 2;
+            SecondListView.ScrollIntoView(SecondListView.SelectedItem);
+
+            ThirdListView.ItemsSource = Enumerable.Range(1, 10000);
+            ThirdListView.SelectedIndex = 999;
+            ThirdListView.ScrollIntoView(ThirdListView.SelectedItem);
         }
 
         private void GoToItem1_OnClick(object sender, RoutedEventArgs e)
@@ -50,59 +69,144 @@ namespace AnimateListViewDemo
 
         private void NavigateToListViewItemIndex(int listViewItemIndex)
         {
-            MyListView.SelectedIndex = listViewItemIndex - 1;
+            FirstListView.SelectedIndex = listViewItemIndex - 1;
             //MyListView.ScrollIntoView(MyListView.Items[0]);
-            MyListView.ScrollIntoView(MyListView.SelectedItem);
+            FirstListView.ScrollIntoView(FirstListView.SelectedItem);
             //item.Focus();
         }
 
-        private void GoToSelectedItem(object sender, RoutedEventArgs e)
+        private void GoToSelectedItem_OnClick(object sender, RoutedEventArgs e)
         {
             //MyListView.ScrollIntoView(MyListView.Items[0]);
-            MyListView.ScrollIntoView(MyListView.SelectedItem);
+            FirstListView.ScrollIntoView(FirstListView.SelectedItem);
         }
 
-        private void GoLeftButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            //TranslateTransform trans = new TranslateTransform();
-            //image.RenderTransform = trans;
-
-            //Point leftePoint = image.TransformToAncestor(GridWithListViews)
-            //              .Transform(new Point(0, 0));
-
-            //Point rightPoint = RightContentControl.TransformToAncestor(GridWithListViews)
-            //    .Transform(new Point(0, 0));
-
-            //DoubleAnimation animationX= new DoubleAnimation(leftePoint.X, rightPoint.X - leftePoint.X, TimeSpan.FromSeconds(10));
-            ////DoubleAnimation animationY = new DoubleAnimation(leftePoint.Y, rightPoint.Y - leftePoint.Y, TimeSpan.FromSeconds(10));
-            //trans.BeginAnimation(TranslateTransform.XProperty, animationX);
-            ////trans.BeginAnimation(TranslateTransform.YProperty, animationY);
-        }
-        
         private void GoLRightButton_OnClick(object sender, RoutedEventArgs e)
         {
-            _image = CreateImageFromControl(MyListView);
+            _image = CreateImageFromControl(GridWithListViews);
 
-            ImitateLeftViewOnRightView();
+            ImitateLeftViewOnRightView(FirstListView, ThirdListView);
             AnimateNavigationToRight();
+        }
+
+        private void ScrollRight3To3_OnClick(object sender, RoutedEventArgs e)
+        {
+            ShowScreanshot();
+
+            SetGridLayout(Layout3ListViewsStoryBoardKey);
+            RunMoveNextNavigation(FirstListView, ThirdListView, GoNext3To3StoryboardKey);
+        }
+
+        private void ScrollRight3To2_OnClick(object sender, RoutedEventArgs e)
+        {
+            ShowScreanshot();
+
+            SetGridLayout(Layout2ListViewsStoryBoardKey);
+            RunMoveNextNavigation(FirstListView, ThirdListView, GoNext3To2StoryboardKey);
+        }
+
+        private void ScrollRight2To2_OnClick(object sender, RoutedEventArgs e)
+        {
+            ShowScreanshot();
+
+            SetGridLayout(Layout2ListViewsStoryBoardKey);
+            RunMoveNextNavigation(FirstListView, ThirdListView, GoNext2To2StoryboardKey);
+        }
+
+        private void ScrollRight2To3_OnClick(object sender, RoutedEventArgs e)
+        {
+            ShowScreanshot();
+
+            SetGridLayout(Layout3ListViewsStoryBoardKey);
+            RunMoveNextNavigation(FirstListView, ThirdListView, GoNext2To3StoryboardKey);
+        }
+
+        private void ShowScreanshot()
+        {
+            FillPlaceHolderImage();
+
+            PlaceHolderImage.Visibility = Visibility.Visible;
+            Panel.SetZIndex(PlaceHolderImage, ImageOnTopZIndex);
+        }
+
+        private void SetGridLayout(string layoutStoryBoardName)
+        {
+            var storyBoard = ((Storyboard)Resources[layoutStoryBoardName]);
+            storyBoard.Begin();
+        }
+
+        private void RunMoveNextNavigation(ListView leftView, ListView rightView, string storyBoardName)
+        {
+            var offset = GetListViewOffset();
+
+            ((EasingDoubleKeyFrame)Resources[MoveNextRealListViewStartOffsetKeyFrameKey]).Value = offset;
+            ((EasingDoubleKeyFrame)Resources[MoveNextDummyImageViewEndOffsetKeyFrameKey]).Value = -offset;
+
+            ImitateRightViewOnLeftView(leftView, rightView);
+
+            var storyBoard = ((Storyboard)Resources[storyBoardName]);
+            storyBoard.Begin();
+        }
+
+        private void FillPlaceHolderImage()
+        {
+            using (var stream = new MemoryStream())
+            {
+                RenderTargetBitmap rtb = new RenderTargetBitmap((int)GridWithListViews.ActualWidth, (int)GridWithListViews.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                rtb.Render(GridWithListViews);
+
+                PngBitmapEncoder png = new PngBitmapEncoder();
+                png.Frames.Add(BitmapFrame.Create(rtb));
+                png.Save(stream);
+
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = stream;
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                bitmap.Freeze();
+
+                PlaceHolderImage.Source = LoadImage(stream.GetBuffer());
+            }
+        }
+
+        private double GetListViewOffset()
+        {
+            Point firstViewPosition = FirstListView.TransformToAncestor(GridWithListViews)
+                .Transform(new Point(0, 0));
+
+            Point thierdViewPosition = ThirdListView.TransformToAncestor(GridWithListViews)
+                .Transform(new Point(0, 0));
+
+            return thierdViewPosition.X - firstViewPosition.X;
         }
 
         #region ImitateLeftViewOnRightView
 
-        private void ImitateLeftViewOnRightView()
+        private static void ImitateLeftViewOnRightView(ListView leftView, ListView rightView)
         {
-            SecondListView.SelectedIndex = MyListView.SelectedIndex;
-            //SecondListView.ScrollIntoView(MyListView.SelectedItem);
+            rightView.SelectedIndex = leftView.SelectedIndex;
 
-            var leftScrollViewer = FindVisualChildren<ScrollViewer>(MyListView)
+            var leftScrollViewer = FindVisualChildren<ScrollViewer>(leftView)
                 .First();
 
-            var rightScrollViewer = FindVisualChildren<ScrollViewer>(SecondListView)
+            var rightScrollViewer = FindVisualChildren<ScrollViewer>(rightView)
                 .First();
 
             rightScrollViewer.ScrollToVerticalOffset(leftScrollViewer.VerticalOffset);
+        }
 
-            SecondListView.Visibility = Visibility.Hidden;
+        private static void ImitateRightViewOnLeftView(ListView leftView, ListView rightView)
+        {
+            leftView.SelectedIndex = rightView.SelectedIndex;
+
+            var leftScrollViewer = FindVisualChildren<ScrollViewer>(leftView)
+                .First();
+
+            var rightScrollViewer = FindVisualChildren<ScrollViewer>(rightView)
+                .First();
+
+            leftScrollViewer.ScrollToVerticalOffset(rightScrollViewer.VerticalOffset);
         }
 
         public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
@@ -133,7 +237,7 @@ namespace AnimateListViewDemo
         {
             var timeSpanForAllAnimations = new TimeSpan(0, 0, 0, 0, 700);
 
-            //Image movement
+            //Add Image
             Grid.SetRow(_image, 0);
             Grid.SetColumn(_image, 0);
             GridWithListViews.Children.Add(_image);
@@ -176,12 +280,12 @@ namespace AnimateListViewDemo
             SecondListView.Visibility = Visibility.Visible;
         }
 
-        private Image CreateImageFromControl(Control control)
+        private static Image CreateImageFromControl(FrameworkElement frameworkElement)
         {
             using (var stream = new MemoryStream())
             {
-                RenderTargetBitmap rtb = new RenderTargetBitmap((int)MyListView.ActualWidth, (int)MyListView.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-                rtb.Render(MyListView);
+                RenderTargetBitmap rtb = new RenderTargetBitmap((int)frameworkElement.ActualWidth, (int)frameworkElement.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                rtb.Render(frameworkElement);
 
                 PngBitmapEncoder png = new PngBitmapEncoder();
                 png.Frames.Add(BitmapFrame.Create(rtb));
@@ -200,7 +304,7 @@ namespace AnimateListViewDemo
             }
         }
 
-        BitmapSource LoadImage(Byte[] imageData)
+        private static BitmapSource LoadImage(Byte[] imageData)
         {
             using (MemoryStream ms = new MemoryStream(imageData))
             {
@@ -211,47 +315,4 @@ namespace AnimateListViewDemo
         }
         #endregion AnimateNavigationToRight
     }
-
-    //public class ScrollPreserver : DependencyObject
-    //{
-    //    public static readonly DependencyProperty PreserveScrollProperty =
-    //        DependencyProperty.RegisterAttached("PreserveScroll",
-    //            typeof(bool),
-    //            typeof(ScrollPreserver),
-    //            new PropertyMetadata(new PropertyChangedCallback(OnScrollGroupChanged)));
-
-    //    public static bool GetPreserveScroll(DependencyObject invoker)
-    //    {
-    //        return (bool)invoker.GetValue(PreserveScrollProperty);
-    //    }
-
-    //    public static void SetPreserveScroll(DependencyObject invoker, bool value)
-    //    {
-    //        invoker.SetValue(PreserveScrollProperty, value);
-    //    }
-
-    //    private static Dictionary<ScrollViewer, bool> scrollViewers_States =
-    //    new Dictionary<ScrollViewer, bool>();
-
-    //    private static void OnScrollGroupChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    //    {
-    //        ScrollViewer scrollViewer = d as ScrollViewer;
-    //        if (scrollViewer != null && (bool)e.NewValue == true)
-    //        {
-    //            if (!scrollViewers_States.ContainsKey(scrollViewer))
-    //            {
-    //                scrollViewer.ScrollChanged += new ScrollChangedEventHandler(scrollViewer_ScrollChanged);
-    //                scrollViewers_States.Add(scrollViewer, false);
-    //            }
-    //        }
-    //    }
-
-    //    static void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
-    //    {
-    //        if (scrollViewers_States[sender as ScrollViewer])
-    //            (sender as ScrollViewer).ScrollToVerticalOffset(e.VerticalOffset + e.ExtentHeightChange);
-
-    //        scrollViewers_States[sender as ScrollViewer] = e.VerticalOffset != 0;
-    //    }
-    //}
 }
